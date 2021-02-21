@@ -1,9 +1,9 @@
-FROM haproxy:1.9-alpine
+FROM haproxy:2.3-alpine
 
 ENTRYPOINT ["/magic-entrypoint", "/docker-entrypoint.sh"]
 CMD ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
 
-RUN apk add --no-cache python3 &&\
+RUN apk add --no-cache python3 py3-pip &&\
     pip3 install --no-cache-dir dnspython
 
 COPY magic-entrypoint.py /magic-entrypoint

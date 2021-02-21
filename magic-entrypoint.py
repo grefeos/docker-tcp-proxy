@@ -35,6 +35,16 @@ defaults
     timeout server "$TIMEOUT_SERVER"
     timeout server-fin "$TIMEOUT_SERVER_FIN"
     timeout tunnel "$TIMEOUT_TUNNEL"
+
+frontend stats
+   mode http 
+   bind *:1936
+   option http-use-htx
+   http-request use-service prometheus-exporter if { path /metrics }
+   stats enable
+   stats uri /
+   stats refresh 10s
+
 """
 
 if len(LISTENS) != len(TALKS):
